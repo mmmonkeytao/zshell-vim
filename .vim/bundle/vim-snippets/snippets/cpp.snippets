@@ -1,187 +1,205 @@
-snippet au
-/***
+extends c
 
-* Copyright (c) Ares Cheng. All rights reserved.
-
-***/
-
-${1:}
-endsnippet
-
-snippet INC
-#include "${1:TODO}"${2}
-endsnippet
-
-snippet inc
-#include <${1:TODO}>${2}
-endsnippet
-
-snippet if
-if (${1:/* condition */}) {
-	${2:TODO}
-}
-endsnippet
-
-snippet ei
-else if (${1:/* condition */}) {
-	${2:TODO}
-}
-endsnippet
-
-snippet el
-else {
-	${1:TODO}
-}
-endsnippet
-
-snippet re
-return(${1:/* condition */});
-endsnippet
-
-snippet do 
-do { 
-	${2:TODO}
-} while (${1:/* condition */});
-endsnippet
-
-snippet wh
-while (${1:/*condition */}) {
-	${2:TODO}
-}
-endsnippet
-
-snippet sw
-switch (${1:/* condition */}) {
-	case ${2:c}: {
-	}
-
-	default: {
-	}
-	break;
-}
-endsnippet
-
-snippet for 
-for (auto ${2:iter} = ${1:c}.begin(); ${3:$2} != $1.end(); ${4:++iter}) {
-	${5:TODO}
-}
-endsnippet
-
-snippet cfor 
-for (auto ${2:citer} = ${1:c}.cbegin(); ${3:$2} != $1.cend(); ${4:++citer}) {
-	${5:TODO}
-}
-endsnippet
-
-snippet For 
-for (auto ${2:i} = 0; $2 != ${1}.size(); ${3:++}$2) {
-	${4:TODO}
-}
-endsnippet
-
-snippet F
-for (auto& e : ${1:c}) {
-}
-endsnippet
-
-snippet FOR
-for (unsigned ${2:i} = 0; $2 < ${1:count}; ${3:++}$2) { 
-	${4:TODO}
-}
-endsnippet
-
-snippet try
-try {
-} catch catch (${1:/* condition */}) {
-}
-endsnippet
-
-snippet ca
-catch (${1:/* condition */}) { 
-} 
-endsnippet
-
-snippet throw 
-th (${1:/* condition */}); 
-endsnippet
-
-# std::vector 
-snippet vec 
-vector<${1:char}>   v${2}; 
-endsnippet 
-# std::list 
-snippet lst 
-list<${1:char}> l${2}; 
-endsnippet 
-# std::set 
-snippet set 
-set<${1:key}>   s${2}; 
-endsnippet 
-# std::map 
-snippet map 
-map<${1:key}, ${2:value}>   m${3}; 
-endsnippet
-
+##
+## Preprocessor
+# #include <...>
+snippet incc
+	#include <${1:iostream}>
+snippet binc
+	#include <boost/${1:shared_ptr}.hpp>
+##
+## STL Collections
+# std::array
+snippet array
+	std::array<${1:T}, ${2:N}> ${3};
+# std::vector
+snippet vector
+	std::vector<${1:T}> ${2};
+# std::deque
+snippet deque
+	std::deque<${1:T}> ${2};
+# std::forward_list
+snippet flist
+	std::forward_list<${1:T}> ${2};
+# std::list
+snippet list
+	std::list<${1:T}> ${2};
+# std::set
+snippet set
+	std::set<${1:T}> ${2};
+# std::map
+snippet map
+	std::map<${1:Key}, ${2:T}> ${3};
+# std::multiset
+snippet mset
+	std::multiset<${1:T}> ${2};
+# std::multimap
+snippet mmap
+	std::multimap<${1:Key}, ${2:T}> ${3};
+# std::unordered_set
+snippet uset
+	std::unordered_set<${1:T}> ${2};
+# std::unordered_map
+snippet umap
+	std::unordered_map<${1:Key}, ${2:T}> ${3};
+# std::unordered_multiset
+snippet umset
+	std::unordered_multiset<${1:T}> ${2};
+# std::unordered_multimap
+snippet ummap
+	std::unordered_multimap<${1:Key}, ${2:T}> ${3};
+# std::stack
+snippet stack
+	std::stack<${1:T}> ${2};
+# std::queue
+snippet queue
+	std::queue<${1:T}> ${2};
+# std::priority_queue
+snippet pqueue
+	std::priority_queue<${1:T}> ${2};
+##
+## Access Modifiers
+# private
+snippet pri
+	private
+# protected
+snippet pro
+	protected
+# public
+snippet pub
+	public
+# friend
+snippet fr
+	friend
+# mutable
+snippet mu
+	mutable
+##
+## Class
+# class
 snippet cl
-class ${1:`Filename('$1_t', 'name')`}
-{
-public:
-	$1 ();
-	virtual ~$1 ();
-private:
-};
-endsnippet
+	/*! \class $1 
+	 *  \brief ${3:Brief class description}
+	 * 
+	 *  ${4:Detailed description} 	
+	 */
+	class ${1:`vim_snippets#Filename('$1', 'name')`}
+	{
+	public:
+		$1(${2});
+		virtual ~$1();
 
-snippet b "bracket" i 
-(${1})${2} 
-endsnippet 
-# 方括号 square bracket，设定为 st 而非 sb，避免与 b 冲突
-snippet st "square bracket" i 
-[${1}]${2} 
-endsnippet 
-# 大括号 brace 
-snippet br "brace" i
-{
-	${1}
-}${2}
-endsnippet
+	protected:
+		m_${5}; /*!< ${6:Member description} */
+	};
+# member function implementation
+snippet mfun
+	${4:void} ${1:`vim_snippets#Filename('$1', 'ClassName')`}::${2:memberFunction}(${3}) {
+		${0}
+	}
+# member function implementation without parameters
+snippet dmfun0
+	/*! \brief ${4:Brief function description here}
+	 *
+	 *  ${5:Detailed description}
+	 * 
+	 * \return ${6:Return parameter description}
+	 */
+	${3:void} ${1:`vim_snippets#Filename('$1', 'ClassName')`}::${2:memberFunction}() {
+		${0}
+	}
+# member function implementation with one parameter
+snippet dmfun1
+	/*! \brief ${6:Brief function description here}
+	 *
+	 *  ${7:Detailed description}
+	 * 
+	 * \param $4 ${8:Parameter description}
+	 * \return ${9:Return parameter description}
+	 */
+	${5:void} ${1:`vim_snippets#Filename('$1', 'ClassName')`}::${2:memberFunction}(${3:Type} ${4:Parameter}) {
+		${0}
+	}
+# member function implementation with two parameter
+snippet dmfun2
+	/*! \brief ${8:Brief function description here}
+	 *
+	 *  ${9:Detailed description}
+	 * 
+	 * \param $4 ${10:Parameter description}
+	 * \param $6 ${11:Parameter description}
+	 * \return ${12:Return parameter description}
+	 */
+	${7:void} ${1:`vim_snippets#Filename('$1', 'ClassName')`}::${2:memberFunction}(${3:Type} ${4:Parameter},${5:Type} ${6:Parameter}) {
+		${0}
+	}
+# namespace
+snippet ns
+	namespace ${1:`vim_snippets#Filename('', 'my')`} {
+		${0}
+	} /* namespace $1 */
+##
+## Input/Output
+# std::cout
+snippet cout
+	std::cout << ${1} << std::endl;
+# std::cin
+snippet cin
+	std::cin >> ${1};
+##
+## Casts
+# static
+snippet sca
+	static_cast<${1:unsigned}>(${2:expr})${3}
+# dynamic
+snippet dca
+	dynamic_cast<${1:unsigned}>(${2:expr})${3}
+# reinterpret
+snippet rca
+	reinterpret_cast<${1:unsigned}>(${2:expr})${3}
+# const
+snippet cca
+	const_cast<${1:unsigned}>(${2:expr})${3}
+## Iteration
+# for i
+snippet fori
+	for (int ${2:i} = 0; $2 < ${1:count}; $2${3:++}) {
+		${4}
+	}
 
-# 单引号 single quote，设定为 se 而非 sq，避免与 q 冲突
-snippet se "single quote" I
-'${1}'${2}
-endsnippet
-# 双引号 quote
-snippet q "quote" I
-"${1}"${2}
-endsnippet
-# 指针符号 arrow 
-snippet ar "arrow" i 
-->${1} 
-endsnippet 
-# dot 
-snippet d "dot" i 
-.${1} 
-endsnippet
+# foreach
+snippet fore
+	for (${1:auto} ${2:i} : ${3:container}) {
+		${4}
+	}
+# iterator
+snippet iter
+	for (${1:std::vector}<${2:type}>::${3:const_iterator} ${4:i} = ${5:container}.begin(); $4 != $5.end(); ++$4) {
+		${6}
+	}
 
-# 作用域 scope 
-snippet s "scope" i 
-::${1} 
-endsnippet
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# auto iterator
+snippet itera
+	for (auto ${1:i} = ${2:container}.begin(); $1 != $2.end(); ++$1) {
+		${3:std::cout << *$1 << std::endl;}
+	}
+##
+## Lambdas
+# lamda (one line)
+snippet ld
+	[${1}](${2}){${3}};
+# lambda (multi-line)
+snippet lld
+	[${1}](${2}){
+		${3}
+	};
+# snippets exception 
+snippet try
+	try {
+		
+	}catch(${1}) {
+		
+	}
 
 
 
