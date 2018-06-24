@@ -1,1 +1,1 @@
-/home/taoye/.spf13-vim-3/.vimrc
+/home/taoye/.vim/vimrc
